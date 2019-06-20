@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import { logIn } from '../store/actions';
 
@@ -9,24 +9,25 @@ class LogIn extends React.Component {
     super(props);
     this.state = {
       email: null,
-      password: null
+      password: null,
     };
   }
 
   handleInputChange = (event) => {
-    const target = event.target;
+    const { target } = event;
     const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
+    const { name } = target;
     this.setState({
-      [name]: value
+      [name]: value,
     });
   }
 
   handleSubmit = (event) => {
     event.preventDefault();
     const { email } = this.state;
+    const { logUserIn } = this.props;
     // Call action
-    this.props.logUserIn(email);
+    logUserIn(email);
   }
 
   render() {
@@ -34,13 +35,13 @@ class LogIn extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <h3>Please log in to continue</h3>
-        <label>
+        <label htmlFor="email">
           Email:
-          <input type="text" value={email} onChange={this.handleInputChange} name="email"/>
+          <input type="text" value={email} onChange={this.handleInputChange} name="email" />
         </label>
-        <label>
+        <label htmlFor="password">
           Password:
-          <input type="password" value={password} onChange={this.handleInputChange} name="password"/>
+          <input type="password" value={password} onChange={this.handleInputChange} name="password" />
         </label>
         <input type="submit" value="Submit" />
       </form>
@@ -48,8 +49,12 @@ class LogIn extends React.Component {
   }
 }
 
+LogIn.propTypes = {
+  logUserIn: PropTypes.func.isRequired,
+};
+
 const mapDispatchToProps = {
-  logUserIn: logIn
-}
+  logUserIn: logIn,
+};
 
 export default connect(null, mapDispatchToProps)(LogIn);

@@ -17,7 +17,7 @@ class Profile extends Component {
 }
 
 const mapDispatchToProps = {
-  logUserOut: logOut
-}
+  logUserOut: logOut,
+};
 
 export default connect(null, mapDispatchToProps)(Profile);
